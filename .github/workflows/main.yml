@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>¿Me perdonas?</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #fdf6e3;
+    }
+    h1 {
+      font-size: 2.5em;
+      color: #333;
+    }
+    .button-container {
+      margin-top: 40px;
+      position: relative;
+      height: 200px;
+    }
+    button {
+      font-size: 1.2em;
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      border: none;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+    #yes {
+      background-color: #4CAF50;
+      color: white;
+    }
+    #no {
+      background-color: #f44336;
+      color: white;
+      position: absolute;
+    }
+  </style>
+</head>
+<body>
+  <h1>¿Me perdonas?</h1>
+  <div class="button-container">
+    <button id="yes" onclick="alert('¡Sabía que me perdonarías! ❤️')">Sí</button>
+    <button id="no">No</button>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById("no");
+    const container = document.querySelector(".button-container");
+
+    container.addEventListener("mousemove", (e) => {
+      const rect = noBtn.getBoundingClientRect();
+      const distance = 100;
+
+      const mouseX = e.clientX;
+      const mouseY = e.clientY;
+
+      const btnX = rect.left + rect.width / 2;
+      const btnY = rect.top + rect.height / 2;
+
+      const dx = mouseX - btnX;
+      const dy = mouseY - btnY;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist < distance) {
+        const offsetX = (Math.random() - 0.5) * 300;
+        const offsetY = (Math.random() - 0.5) * 300;
+
+        const newX = Math.min(
+          container.offsetWidth - noBtn.offsetWidth,
+          Math.max(0, noBtn.offsetLeft + offsetX)
+        );
+        const newY = Math.min(
+          container.offsetHeight - noBtn.offsetHeight,
+          Math.max(0, noBtn.offsetTop + offsetY)
+        );
+
+        noBtn.style.left = newX + "px";
+        noBtn.style.top = newY + "px";
+      }
+    });
+
+    // 🛑 Mensaje al intentar cerrar la pestaña
+    window.onbeforeunload = function() {
+      return "¿De verdad quieres dejarme sin perdonarme? 😢";
+    };
+  </script>
+</body>
+</html>
